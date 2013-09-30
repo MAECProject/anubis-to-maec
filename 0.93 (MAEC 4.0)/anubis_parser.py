@@ -1,10 +1,10 @@
 #Anubis main parser class
 #For use in extracting data from XML Anubis output
 
-#Copyright (c) 2012, The MITRE Corporation
+#Copyright (c) 2012, 2013, The MITRE Corporation
 #All rights reserved.
 
-#Anubis Converter Script v0.92
+#Anubis Converter Script v0.93
 
 import anubis
 from maec.utils import MAECNamespaceParser
@@ -860,8 +860,6 @@ class parser:
                 actual_key += (split_name[i] + '\\')
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['key'] = actual_key
-            regkey_attributes['values'] = [{ 'name' : modified_regvalue.get_value_name(),
-                                             'data' : modified_regvalue.get_value_data() }]
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['type'] = 'Key/Key Group'
             
