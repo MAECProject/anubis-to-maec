@@ -15,8 +15,8 @@
 #Anubis -> MAEC Converter Script
 #Copyright 2012, MITRE Corp
 #Ivan Kirillov//ikirillov@mitre.org
-#v0.92 - beta
-#Updated 05/03/12 for compatibility with MAEC schema v2.1
+#v0.93 - beta
+#Updated 09/20/13 for compatibility with MAEC schema v2.1
 
 import anubis_parser as anparser
 from maec.package.package import Package
@@ -50,19 +50,10 @@ def create_maec(inputfile, outputfile, verbose_error_mode, stat_mode):
             for subject in parser.maec_subjects:
                 package.add_malware_subject(subject)
                 
-            '''
-            # Temporarily removed during upgrade for MAEC v4
             ##Add all applicable actions to the bundle
             for key, value in parser.actions.items():
                 for action in value:
-                    bundle.add_action(action, key)
                     stat_actions += 1
-            ##Add all applicable objects to the bundle
-            for key, value in parser.objects.items():
-                for object in value:
-                    bundle.add_object(object, key)
-            bundle.build_maec_bundle()
-            '''
                 
             ##Finally, Export the results
             package.to_xml_file(outputfile)
