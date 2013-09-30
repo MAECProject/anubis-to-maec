@@ -9464,7 +9464,7 @@ class tcp_conversation(GeneratedsSuper):
             self.buildChildren(child, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
         value = attrs.get('org_bytes_sent')
-        if value is not None:
+        if value is not None and value is not "?":
             already_processed.append('org_bytes_sent')
             try:
                 self.org_bytes_sent = int(value)

@@ -831,8 +831,9 @@ class parser:
                 actual_key += (split_name[i] + '\\')
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['key'] = actual_key
-            regkey_attributes['values'] = [{ 'name' : read_regvalue.get_value_name(),
-                                             'data' : read_regvalue.get_value_data() }]
+            regkey_attributes['values'] = [{ 'data' : read_regvalue.get_value_data() }]
+            if read_regvalue.get_value_name() is not "":
+                regkey_attributes['values'][0]['name'] = read_regvalue.get_value_name()
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['type'] = 'Key/Key Group'
             
