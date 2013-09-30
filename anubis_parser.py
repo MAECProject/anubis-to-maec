@@ -802,7 +802,11 @@ class parser:
                 actual_key += (split_name[i] + '\\')
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['key'] = actual_key
-            regkey_attributes['values'] = [{ 'data' : modified_regvalue.get_value_data() }]
+            
+            if modified_regvalue.get_value_name() is not "" or modified_regvalue.get_value_data() is not "":
+                regkey_attributes['values'] = [{}]
+            if modified_regvalue.get_value_data() is not "":
+                regkey_attributes['values'] = [{ 'data' : modified_regvalue.get_value_data() }]
             if modified_regvalue.get_value_name() is not "":
                 regkey_attributes['values'][0]['name'] = modified_regvalue.get_value_name()
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
@@ -832,7 +836,10 @@ class parser:
                 actual_key += (split_name[i] + '\\')
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['key'] = actual_key
-            regkey_attributes['values'] = [{ 'data' : read_regvalue.get_value_data() }]
+            if read_regvalue.get_value_name() is not "" or read_regvalue.get_value_data() is not "":
+                regkey_attributes['values'] = [{}]
+            if read_regvalue.get_value_data() is not "":
+                regkey_attributes['values'] = [{ 'data' : read_regvalue.get_value_data() }]
             if read_regvalue.get_value_name() is not "":
                 regkey_attributes['values'][0]['name'] = read_regvalue.get_value_name()
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
@@ -1008,16 +1015,18 @@ class parser:
                     'source_socket_address': {
                         'ip_address': {'address_value' : socket.get_local_ip(),
                                        'is_source' : True },
-                        'port': { 'port_value' : socket.get_local_port() },
-                        'layer4_protocol' : socket.get_type()
+                        'port': { 'port_value' : socket.get_local_port() }
                     },
                     'destination_socket_address': {
                         'ip_address': {'address_value' : socket.get_foreign_ip(),
-                                       'is_source' : True },
-                        'port': { 'port_value' : socket.get_foreign_port() },
-                        'layer4_protocol' : socket.get_type()
-                    }
+                                       'is_source' : False },
+                        'port': { 'port_value' : socket.get_foreign_port() }
+                    },
+                    'layer4_protocol' : socket.get_type()
                 }
+                
+                if socket.get_foreign_ip() is "":
+                    connection_attributes['destination_socket_address'].pop('ip_address')
 
                 #Generate the MAEC objects and actions
                 #First, create the object
@@ -1039,9 +1048,13 @@ class parser:
         for created_process in process_activity.get_process_created():
             process_attributes = {}
             process_attributes['xsi:type'] = 'ProcessObjectType'
-            process_attributes['image_info'] = {}
-            process_attributes['image_info']['file_name'] = created_process.get_exe_name()
-            process_attributes['image_info']['command_line'] = created_process.get_cmd_line()
+            
+            if created_process.get_cmd_line() is not "" or created_process.get_exe_name() is not "":
+                process_attributes['image_info'] = {}
+            if created_process.get_exe_name() is not "":
+                process_attributes['image_info']['file_name'] = created_process.get_exe_name()
+            if created_process.get_cmd_line() is not "":
+                process_attributes['image_info']['command_line'] = created_process.get_cmd_line()
 
             #Generate the MAEC objects and actions
             #First, create the object
