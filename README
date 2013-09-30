@@ -2,7 +2,7 @@
 
       Anubis XML -> MAEC XML Converter Script
 
- Copyright (c) 2012 - The MITRE Corporation
+ Copyright (c) 2012, 2013 - The MITRE Corporation
 
 ****************************************************
 
@@ -13,10 +13,9 @@ For more information, please refer to the terms.txt file.
 
 #################################################################
 #Generates MAEC Output from an Anubis XML File                  #
-#Compatible with MAEC Schema v4.0                               #
-# & CybOX 2.0                                                   #
+#Compatible with MAEC Schema v4.0 & CybOX 2.0                   #
 #v0.93 - BETA                                                   #
-#Update 9/20/2013                                               #
+#Updated 9/20/2013                                              #
 #Ivan Kirillov//ikirillov@mitre.org                             #
 #Andrew Sillers//asillers@mitre.org                             #
 #                                                               #
@@ -24,6 +23,15 @@ For more information, please refer to the terms.txt file.
 # MAEC - http://maec.mitre.org                                  #
 # Anubis - http://anubis.iseclab.org                            #
 #################################################################
+
+
+This software depends on the python-cybox (v2.0) and python-maec (v4.0)
+libraries:
+
+python-cybox: https://github.com/CybOXProject/python-cybox/releases/tag/v2.0.0.1
+python-maec:  https://github.com/MAECProject/python-maec/releases/tag/v4.0.0
+
+
 --------------------------------------------------------------------------------
 --Included Files----------------------------------------------------------------
 
