@@ -2,7 +2,7 @@
 #                                                   #
 #      Anubis -> MAEC XML Converter Script          #
 #                                                   #
-# Copyright (c) 2012 - The MITRE Corporation        #
+# Copyright (c) 2013 - The MITRE Corporation        #
 #                                                   #
 #***************************************************#
 
@@ -13,10 +13,11 @@
 #For more information, please refer to the terms.txt file.
 
 #Anubis -> MAEC Converter Script
-#Copyright 2012, MITRE Corp
+#Copyright 2013, MITRE Corp
+#Andrew Sillers//asillers@mitre.org
 #Ivan Kirillov//ikirillov@mitre.org
-#v0.93 - beta
-#Updated 09/20/13 for compatibility with MAEC schema v2.1
+#v0.94 - beta
+#Updated 10/16/13 for compatibility with MAEC schema v4.0.1
 
 import anubis_parser as anparser
 from maec.package.package import Package
@@ -78,8 +79,8 @@ def usage():
     
 USAGE_TEXT = """
 Anubis XML Output --> MAEC XML Converter Utility
-v0.92 BETA
-Generates valid MAEC v2.1 content
+v0.94 BETA
+Generates valid MAEC v4.0.1 content
 
 Usage: python anubis_to_maec.py <special arguments> -i <input anubis xml output> -o <output maec xml file> OR -d <directory name>
 

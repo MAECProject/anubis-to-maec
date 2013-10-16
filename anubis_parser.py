@@ -4,7 +4,7 @@
 #Copyright (c) 2012, 2013, The MITRE Corporation
 #All rights reserved.
 
-#Anubis Converter Script v0.93
+#Anubis Converter Script v0.94
 
 import anubis
 from maec.utils import MAECNamespaceParser
