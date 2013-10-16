@@ -1022,7 +1022,7 @@ class parser:
                                        'is_source' : False },
                         'port': { 'port_value' : socket.get_foreign_port() }
                     },
-                    'layer4_protocol' : socket.get_type()
+                    'layer4_protocol' : {'value':socket.get_type(), 'force_datatype':True}
                 }
                 
                 if socket.get_foreign_ip() is "":
