@@ -572,7 +572,7 @@ class parser:
 
             fs_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('file_system').append(fs_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id })'''
+            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id_ })'''
 
         # python-cybox does not yet support control codes
         '''for device_control in file_activity.get_device_control_communication():
@@ -681,7 +681,7 @@ class parser:
 
             fs_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('file_system').append(fs_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id })
+            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id_ })
     
     def __process_registry_activities(self, registry_activity, current_process_obj):
         for created_regkey in registry_activity.get_reg_key_created():
