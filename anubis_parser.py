@@ -347,8 +347,10 @@ class parser:
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
-                file_attributes['full_path'] = { 'value' : filename }
-                file_attributes['file_name'] = { 'value' : actual_filename }
+                fully_qualified = True
+                if "%" in filename:
+                    fully_qualified = False
+                file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
             
             # defined associated object
             associated_object_dict['properties'] = file_attributes
@@ -429,8 +431,10 @@ class parser:
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
-                file_attributes['full_path'] = { 'value' : filename }
-                file_attributes['file_name'] = { 'value' : actual_filename }
+                fully_qualified = True
+                if "%" in filename:
+                    fully_qualified = False
+                file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
                 
             #Generate the MAEC objects and actions
             #First, create the object
