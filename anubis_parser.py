@@ -390,8 +390,10 @@ class parser:
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
-                file_attributes['full_path'] = { 'value' : filename }
-                file_attributes['file_name'] = { 'value' : actual_filename }
+                fully_qualified = True
+                if "%" in filename:
+                    fully_qualified = False
+                file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
 
             associated_object_dict['properties'] = file_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
@@ -475,8 +477,10 @@ class parser:
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
-                file_attributes['full_path'] = { 'value' : filename }
-                file_attributes['file_name'] = { 'value' : actual_filename }
+                fully_qualified = True
+                if "%" in filename:
+                    fully_qualified = False
+                file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
                 
             #Generate the MAEC objects and actions
             #First, create the object
@@ -511,8 +515,7 @@ class parser:
             filepath = filename.rstrip(actual_filename)
             
             file_attributes['xsi:type'] = "FileObjectType"
-            file_attributes['full_path'] = { 'value' : filename }
-            file_attributes['file_name'] = { 'value' : actual_filename, 'fully_qualified' : False }
+            file_attributes['file_path'] = { 'value' : filename }
             file_attributes['linkname'] = created_link.get_link_name()
 
             #Generate the MAEC objects and actions
@@ -542,21 +545,19 @@ class parser:
                 split_filename = filename.split('\\')
             actual_filename = split_filename[len(split_filename)-1]
             filepath = filename.rstrip(actual_filename)
-            
-            file_attributes['file_name'] = { 'value' : actual_filename }
-            
-                
+
             is_pipe = split_filename[0] == 'PIPE' or filename.lower().count('pipe') > 0
             
             if is_pipe:
                 file_attributes['xsi:type'] = "PipeObjectType"
                 file_attributes['named'] = True
-                file_attributes['name'] = split_filename[1]
+                file_attributes['name'] = split_filename[1]    
+                file_attributes['file_path'] = { 'value' : filename }
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
                 file_attributes['file_name'] = { 'value' : actual_filename }
                 if len(filepath) > 1:
-                    file_attributes['full_path'] = { 'value' : filename }
+                    file_attributes['file_path'] = { 'value' : filename }
                 
             #TODO: implement in Cybox API
             #file_attributes['controlcode'] = fs_control.get_control_code()
@@ -657,7 +658,12 @@ class parser:
             file_attributes_old['xsi:type'] = "FileObjectType"
             file_attributes_old['file_name'] = { 'value' : actual_filename_old }
             if len(filepath_old) > 1:
-                file_attributes_old['full_path'] = { 'value' : filename_old }
+                file_attributes['xsi:type'] = "FileObjectType"
+                fully_qualified = True
+                if "%" in filename_old:
+                    fully_qualified = False
+                file_attributes['file_path'] = { 'value' : filename_old, 'fully_qualified' : fully_qualified }
+                
                 
             file_attributes_new = {}
             associated_object_dict_new = { 'id' : self.generator.generate_object_id() }
@@ -668,7 +674,12 @@ class parser:
             file_attributes_new['xsi:type'] = "FileObjectType"
             file_attributes_new['file_name'] = { 'value' : actual_filename_new }
             if len(filepath_new) > 1:
-                file_attributes_new['full_path'] = { 'value' : filename_new }
+                file_attributes['xsi:type'] = "FileObjectType"
+                fully_qualified = True
+                if "%" in filename_new:
+                    fully_qualified = False
+                file_attributes['file_path'] = { 'value' : filename_new, 'fully_qualified' : fully_qualified }
+                
             #Generate the MAEC objects and actions
             #First, create the objects
             associated_object_dict_old['properties'] = file_attributes_old
