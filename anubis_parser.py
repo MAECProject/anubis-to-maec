@@ -65,8 +65,24 @@ class parser:
     #Parse the XML document
     #Extract processes, actions, and information about the analysis subject
     def parse_document(self):
+        #Get the analysis subjects
+        analysis_subjects = self.analysis_object.get_analysis_subject()
+        
+        id_namespace = None
+        
+        for analysis_subject in analysis_subjects:
+            id_namespace = analysis_subject.get_general().get_md5()
+            if id_namespace is not None:
+                break
+        
+        if id_namespace is None:
+            for analysis_subject in analysis_subjects:
+                id_namespace = analysis_subject.get_general().get_virtual_fn()
+                if id_namespace is not None:
+                    break
+        
         #Setup the generator
-        self.generator = Generator('anubis_to_maec')
+        self.generator = Generator('anubis_to_maec_' + id_namespace)
         
         #Setup the action/object dictionaries
         self.__setup_dictionaries()
@@ -74,9 +90,6 @@ class parser:
         #Get the analysis config
         config = self.analysis_object.get_configuration()
         self.version = config.get_ttanalyze_version().get_prog_version()
-        
-        #Get the analysis subjects
-        analysis_subjects = self.analysis_object.get_analysis_subject()
         
         #create the process tree and do the additional processing
         self.__create_process_tree(analysis_subjects)
