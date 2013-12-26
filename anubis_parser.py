@@ -1075,12 +1075,14 @@ class parser:
     def __process_process_activities(self, process_activity, current_process_obj):
         for created_process in process_activity.get_process_created():
             process_attributes = {}
-            process_attributes['xsi:type'] = 'ProcessObjectType'
+            process_attributes['xsi:type'] = 'WindowsProcessObjectType'
             
             if created_process.get_cmd_line() is not "" or created_process.get_exe_name() is not "":
                 process_attributes['image_info'] = {}
             if created_process.get_exe_name() is not "":
-                process_attributes['image_info']['file_name'] = created_process.get_exe_name()
+                process_name = created_process.get_exe_name()
+                process_attributes['image_info']['path'] = { 'value': process_name }
+                process_attributes['name'] = { 'value': process_name.split('\\')[-1] }
             if created_process.get_cmd_line() is not "":
                 process_attributes['image_info']['command_line'] = created_process.get_cmd_line()
 
@@ -1101,7 +1103,7 @@ class parser:
             
         for killed_process in process_activity.get_process_killed():
             process_attributes = {}
-            process_attributes['xsi:type'] = 'ProcessObjectType'
+            process_attributes['xsi:type'] = 'WindowsProcessObjectType'
             process_attributes['name'] = killed_process.get_name()
             
             #Generate the MAEC objects and actions
@@ -1120,10 +1122,12 @@ class parser:
             current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
         
         for created_remote_thread in process_activity.get_remote_thread_created():
+            process_path = created_remote_thread.get_process()
             process_attributes = {}
-            process_attributes['xsi:type'] = 'ProcessObjectType'
+            process_attributes['xsi:type'] = 'WindowsProcessObjectType'
+            process_attributes['name'] = process_path.split("\\")[-1]
             process_attributes['image_info'] = {}
-            process_attributes['image_info']['file_name'] = created_remote_thread.get_process()
+            process_attributes['image_info']['path'] = { 'value': process_path }
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -1141,10 +1145,12 @@ class parser:
             current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
             
         for mem_read in process_activity.get_foreign_mem_area_read():
+            process_path = mem_read.get_process()
             process_attributes = {}
-            process_attributes['xsi:type'] = 'ProcessObjectType'
+            process_attributes['xsi:type'] = 'WindowsProcessObjectType'
+            process_attributes['name'] = process_path.split("\\")[-1]
             process_attributes['image_info'] = {}
-            process_attributes['image_info']['file_name'] = mem_read.get_process()
+            process_attributes['image_info']['path'] = { 'value': process_path }
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -1162,10 +1168,12 @@ class parser:
             current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
             
         for mem_write in process_activity.get_foreign_mem_area_write():
+            process_path = mem_write.get_process()
             process_attributes = {}
-            process_attributes['xsi:type'] = 'ProcessObjectType'
+            process_attributes['xsi:type'] = 'WindowsProcessObjectType'
+            process_attributes['name'] = process_path.split("\\")[-1]
             process_attributes['image_info'] = {}
-            process_attributes['image_info']['file_name'] = mem_write.get_process()
+            process_attributes['image_info']['path'] = { 'value': process_path }
             
             #Generate the MAEC objects and actions
             #First, create the object
