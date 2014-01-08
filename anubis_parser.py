@@ -20,6 +20,24 @@ from cybox.core.object import Object
 from cybox.core.associated_object import AssociatedObject
 from cybox.common.tools import ToolInformation
 
+# test if a dictionary is empty,
+# i.e., all properties are None or empty string
+# TODO: detect empty lists
+def empty_test(dic):
+    for k,v in dic.items():
+        # an xsi:type doesn't make a dictionary non-empty
+        if k is "xsi:type": continue
+        
+        # if a non-empty property is found, it's not empty
+        if v is not None and v is not "":
+            return False
+        
+        if isinstance(v, dict):
+            if not empty_test(v):
+                return False
+
+    return True
+
 class parser:
     def __init__(self):
         #array for storing actions
@@ -365,6 +383,8 @@ class parser:
                     fully_qualified = False
                 file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
             
+            if empty_test(file_attributes): continue
+            
             # defined associated object
             associated_object_dict['properties'] = file_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
@@ -380,6 +400,7 @@ class parser:
                 action_attributes['name'] = {'value' : 'delete named pipe', 'xsi:type' : 'maecVocabs:IPCActionNameVocab-1.0'}
 
             fs_action = MalwareAction.from_dict(action_attributes)
+            
             self.actions.get('file_system').append(fs_action)
             
             current_process_obj['initiated_actions'].append({'action_id': fs_action.id_})
@@ -407,6 +428,8 @@ class parser:
                 if "%" in filename:
                     fully_qualified = False
                 file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
+
+            if empty_test(file_attributes): continue
 
             associated_object_dict['properties'] = file_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
@@ -451,6 +474,8 @@ class parser:
                     fully_qualified = False
                 file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
                 
+            if empty_test(file_attributes): continue
+                
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict['properties'] = file_attributes
@@ -494,6 +519,8 @@ class parser:
                 if "%" in filename:
                     fully_qualified = False
                 file_attributes['file_path'] = { 'value' : filename, 'fully_qualified' : fully_qualified }
+                
+            if empty_test(file_attributes): continue
                 
             #Generate the MAEC objects and actions
             #First, create the object
@@ -693,6 +720,8 @@ class parser:
                     fully_qualified = False
                 file_attributes['file_path'] = { 'value' : filename_new, 'fully_qualified' : fully_qualified }
                 
+            if empty_test(file_attributes): continue
+                
             #Generate the MAEC objects and actions
             #First, create the objects
             associated_object_dict_old['properties'] = file_attributes_old
@@ -724,6 +753,8 @@ class parser:
             regkey_attributes['key'] = actual_key
             regkey_attributes['type'] = 'Key/Key Group'
             
+            if empty_test(regkey_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -750,6 +781,8 @@ class parser:
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['key'] = actual_key
             regkey_attributes['type'] = 'Key/Key Group'
+            
+            if empty_test(regkey_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -778,6 +811,8 @@ class parser:
             regkey_attributes['key'] = actual_key
             regkey_attributes['type'] = 'Key/Key Group'
             
+            if empty_test(regkey_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -805,6 +840,8 @@ class parser:
             regkey_attributes['key'] = actual_key
             regkey_attributes['value'] = [{ 'name' : deleted_regkeyvalue.get_value_name() }]
             regkey_attributes['type'] = 'Key/Key Group'
+            
+            if empty_test(regkey_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -840,6 +877,8 @@ class parser:
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['type'] = 'Key/Key Group'
             
+            if empty_test(regkey_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -873,6 +912,8 @@ class parser:
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['type'] = 'Key/Key Group'
             
+            if empty_test(regkey_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -899,6 +940,8 @@ class parser:
             regkey_attributes['key'] = actual_key
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['type'] = 'Key/Key Group'
+            
+            if empty_test(regkey_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -933,6 +976,8 @@ class parser:
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
             service_attributes['name'] = started_service.get_name()
             
+            if empty_test(service_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -955,6 +1000,8 @@ class parser:
             service_attributes['name'] = created_service.get_name()
             service_attributes['image_info'] = {'path' : { 'value' : created_service.get_path() } }
             
+            if empty_test(service_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -976,6 +1023,8 @@ class parser:
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
             service_attributes['name'] = deleted_service.get_name()
             
+            if empty_test(service_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -996,6 +1045,8 @@ class parser:
             service_attributes = {}
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
             service_attributes['name'] = changed_service.get_name()
+            
+            if empty_test(service_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -1056,6 +1107,8 @@ class parser:
                 if socket.get_foreign_ip() is "":
                     connection_attributes['destination_socket_address'].pop('ip_address')
 
+                if empty_test(connection_attributes): continue
+
                 #Generate the MAEC objects and actions
                 #First, create the object
                 associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -1086,6 +1139,8 @@ class parser:
             if created_process.get_cmd_line() is not "":
                 process_attributes['image_info']['command_line'] = created_process.get_cmd_line()
 
+            if empty_test(process_attributes): continue
+
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -1105,6 +1160,8 @@ class parser:
             process_attributes = {}
             process_attributes['xsi:type'] = 'WindowsProcessObjectType'
             process_attributes['name'] = killed_process.get_name()
+            
+            if empty_test(process_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -1129,6 +1186,8 @@ class parser:
             process_attributes['image_info'] = {}
             process_attributes['image_info']['path'] = { 'value': process_path }
             
+            if empty_test(process_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -1146,11 +1205,16 @@ class parser:
             
         for mem_read in process_activity.get_foreign_mem_area_read():
             process_path = mem_read.get_process()
+            
+            if process_path is "": continue
+            
             process_attributes = {}
             process_attributes['xsi:type'] = 'WindowsProcessObjectType'
             process_attributes['name'] = process_path.split("\\")[-1]
             process_attributes['image_info'] = {}
             process_attributes['image_info']['path'] = { 'value': process_path }
+            
+            if empty_test(process_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
@@ -1175,6 +1239,8 @@ class parser:
             process_attributes['image_info'] = {}
             process_attributes['image_info']['path'] = { 'value': process_path }
             
+            if empty_test(process_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -1195,6 +1261,8 @@ class parser:
             mutex_attributes = {}
             mutex_attributes['xsi:type'] = "WindowsMutexObjectType"
             mutex_attributes['name']  = created_mutex.get_name()
+
+            if empty_test(mutex_attributes): continue
 
             #Generate the MAEC objects and actions
             #First, create the object
@@ -1218,6 +1286,8 @@ class parser:
             driver_attributes['xsi:type'] = 'WindowsDriverObjectType'
             driver_attributes['driver_name'] = loaded_driver.get_name()
             
+            if empty_test(driver_attributes): continue
+            
             #Generate the MAEC objects and actions
             #First, create the object
             associated_object_dict = { 'id' : self.generator.generate_object_id() }
@@ -1238,6 +1308,8 @@ class parser:
             driver_attributes = {}
             driver_attributes['xsi:type'] = 'WindowsDriverObjectType'
             driver_attributes['driver_name'] = unloaded_driver.get_name()
+            
+            if empty_test(driver_attributes): continue
             
             #Generate the MAEC objects and actions
             #First, create the object
