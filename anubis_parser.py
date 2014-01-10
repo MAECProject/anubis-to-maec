@@ -1057,7 +1057,7 @@ class parser:
             #Next, create the action (that operated on the object)
             action_attributes = {}
             action_attributes['id'] = self.generator.generate_malware_action_id()
-            action_attributes['name'] = {'value' : 'modify service', 'xsi:type' : 'maecVocabs:ServiceActionNameVocab-1.0'}
+            action_attributes['name'] = {'value' : 'modify service configuration', 'xsi:type' : 'maecVocabs:ServiceActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
             service_action = MalwareAction.from_dict(action_attributes)
