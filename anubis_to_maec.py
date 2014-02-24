@@ -16,7 +16,7 @@
 #Copyright 2013, MITRE Corp
 #Andrew Sillers & Ivan Kirillov, MITRE
 #v0.95 - BETA
-#Generates valid MAEC v4.1/CybOX v2.1 draft content
+#Updated 02/24/2014 for MAEC v4.1 and CybOX v2.1
 
 import anubis_parser as anparser
 from maec.package.package import Package

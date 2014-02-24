@@ -1,5 +1,5 @@
 # Copyright (c) 2014, The MITRE Corporation. All rights reserved.
-# See TERMS.txt for complete terms.
+# For more information, please refer to the terms.txt file.
 
 #Anubis Converter Script
 #Updated 02/24/2014 for MAEC v4.1 and CybOX v2.1
