@@ -25,8 +25,7 @@ import os
 import traceback
 
 #Create a MAEC output file from an Anubis input file
-def create_maec(inputfile, outputfile, verbose_error_mode, stat_mode):
-    stat_actions = 0
+def create_maec(inputfile, outputfile, verbose_error_mode):
 
     if os.path.isfile(inputfile):    
 
@@ -50,18 +49,9 @@ def create_maec(inputfile, outputfile, verbose_error_mode, stat_mode):
             for subject in parser.maec_subjects:
                 package.add_malware_subject(subject)
                 
-            ##Add all applicable actions to the bundle
-            for key, value in parser.actions.items():
-                for action in value:
-                    stat_actions += 1
-                
             ##Finally, Export the results
             package.to_xml_file(outputfile)
             
-            if stat_mode:
-                print '\n---- Statistics ----'
-                print str(stat_actions) + ' actions converted'
-                #print str(converter.stat_behaviors) + ' behaviors extracted'
         except Exception, err:
            #print('\nError: %s\n' % str(err))
            
@@ -90,7 +80,6 @@ Special arguments are as follows (all are optional):
 
 def main():
     verbose_error_mode = 0
-    stat_mode = 0
     infilename = ''
     outfilename = ''
     directoryname = ''
@@ -111,8 +100,6 @@ def main():
             outfilename = args[i+1]
         elif args[i] == '-d':
             directoryname = args[i+1]
-        elif args[i] == '-s':
-            stat_mode = 1
     
     if directoryname != '':
         for filename in os.listdir(directoryname):
@@ -121,10 +108,11 @@ def main():
             else:
                 print filename
                 outfilename = filename.rstrip('.xml') + '_anubis_maec.xml'
-                create_maec(os.path.join(directoryname, filename), outfilename, verbose_error_mode, stat_mode)
+                create_maec(os.path.join(directoryname, filename), outfilename,
+                    verbose_error_mode)
     #Basic input file checking
     elif infilename != '' and outfilename != '':
-        create_maec(infilename, outfilename, verbose_error_mode, stat_mode)
+        create_maec(infilename, outfilename, verbose_error_mode)
     print 'Done'
 
 if __name__ == "__main__":
