@@ -2,7 +2,7 @@
 #                                                   #
 #      Anubis -> MAEC XML Converter Script          #
 #                                                   #
-# Copyright (c) 2013 - The MITRE Corporation        #
+# Copyright (c) 2014 - The MITRE Corporation        #
 #                                                   #
 #***************************************************#
 
@@ -12,12 +12,11 @@
 
 #For more information, please refer to the terms.txt file.
 
-#Anubis -> MAEC Converter Script
+#Anubis Converter Script
 #Copyright 2013, MITRE Corp
-#Andrew Sillers//asillers@mitre.org
-#Ivan Kirillov//ikirillov@mitre.org
-#v0.94 - beta
-#Updated 10/16/13 for compatibility with MAEC schema v4.0.1
+#Andrew Sillers & Ivan Kirillov, MITRE
+#v0.95 - BETA
+#Generates valid MAEC v4.1/CybOX v2.1 draft content
 
 import anubis_parser as anparser
 from maec.package.package import Package
@@ -28,13 +27,13 @@ import traceback
 #Create a MAEC output file from an Anubis input file
 def create_maec(inputfile, outputfile, verbose_error_mode, stat_mode):
     stat_actions = 0
+
     if os.path.isfile(inputfile):    
+
         #Create the main parser object
-        
         parser = anparser.parser()
         
         try:
-            
             open_file = parser.open_file(inputfile)
             
             if not open_file:
@@ -79,15 +78,16 @@ def usage():
     
 USAGE_TEXT = """
 Anubis XML Output --> MAEC XML Converter Utility
-v0.94 BETA
-Generates valid MAEC v4.0.1 content
+v0.95 BETA // Supports MAEC v4.1 and CybOX v2.1
 
-Usage: python anubis_to_maec.py <special arguments> -i <input anubis xml output> -o <output maec xml file> OR -d <directory name>
+Usage: python anubis_to_maec.py <special arguments> -i <input anubis xml output> -o <output maec xml file>
+       OR -d <directory name>
 
 Special arguments are as follows (all are optional):
--s : print statistics regarding number of actions converted.
 -v : verbose error mode (prints tracebacks of any errors during execution).
+
 """    
+
 def main():
     verbose_error_mode = 0
     stat_mode = 0
