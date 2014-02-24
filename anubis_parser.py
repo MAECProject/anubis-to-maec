@@ -1,24 +1,24 @@
+# Copyright (c) 2014, The MITRE Corporation. All rights reserved.
+# See TERMS.txt for complete terms.
+
+#Anubis Converter Script
+#Updated 02/24/2014 for MAEC v4.1 and CybOX v2.1
+
 #Anubis main parser class
 #For use in extracting data from XML Anubis output
-
-#Copyright (c) 2012, 2013, The MITRE Corporation
-#All rights reserved.
-
-#Anubis Converter Script v0.94
-
-import anubis
-from maec.utils import MAECNamespaceParser
 from maec.bundle.bundle import Bundle
-from maec.bundle.process_tree import ProcessTree
 from maec.bundle.malware_action import MalwareAction
 from maec.bundle.av_classification import AVClassification, AVClassifications
 from maec.package.analysis import Analysis, DynamicAnalysisMetadata
 from maec.package.malware_subject import MalwareSubject
 from maec.bundle.behavior import Behavior
 from maec.id_generator import Generator
+from maec.bundle.process_tree import ProcessTree
+from maec.utils import MAECNamespaceParser
 from cybox.core.object import Object
 from cybox.core.associated_object import AssociatedObject
 from cybox.common.tools import ToolInformation
+import anubis
 
 # test if a dictionary is empty,
 # i.e., all properties are None or empty string
