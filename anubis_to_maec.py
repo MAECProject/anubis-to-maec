@@ -13,7 +13,7 @@
 #For more information, please refer to the terms.txt file.
 
 #Anubis Converter Script
-#Copyright 2013, MITRE Corp
+#Copyright 2014, MITRE Corp
 #Andrew Sillers & Ivan Kirillov, MITRE
 #v0.95 - BETA
 #Updated 02/24/2014 for MAEC v4.1 and CybOX v2.1
