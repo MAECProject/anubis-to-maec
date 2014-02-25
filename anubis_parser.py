@@ -12,6 +12,7 @@ from maec.bundle.av_classification import AVClassification, AVClassifications
 from maec.package.analysis import Analysis, DynamicAnalysisMetadata
 from maec.package.malware_subject import MalwareSubject
 from maec.bundle.behavior import Behavior
+from maec.bundle.process_tree import ProcessTree
 import maec.utils
 from cybox.utils import Namespace
 from cybox.core.object import Object
@@ -215,7 +216,7 @@ class parser:
         
         #Create the file object and add the attributes
         object_dict = {}
-        object_dict['id'] = self.generator.generate_object_id()
+        object_dict['id'] = maec.utils.idgen.create_id(prefix="object")
         self.subject_id_list.append(object_dict['id'])
         
         file_dict = {}
@@ -261,7 +262,8 @@ class parser:
         analysis = Analysis()
         analysis.type = 'triage'
         analysis.method = 'dynamic'
-        analysis.add_tool(ToolInformation.from_dict({'id' : self.generator.generate_tool_id(),
+        analysis.add_tool(ToolInformation.from_dict({'id' :
+          maec.utils.idgen.create_id(prefix="tool"),
                            'vendor' : 'ISECLab', 
                            'name' : 'TTAnalyze' }))
         
@@ -308,11 +310,12 @@ class parser:
 
         #create the process object and add the attributes
         process_attributes = {}
-        associated_object_dict = {  'id' : self.generator.generate_object_id() }
+        associated_object_dict = {  'id' :
+        maec.utils.idgen.create_id(prefix="object")}
         
         process_attributes['xsi:type'] = 'WindowsProcessObjectType'
         process_attributes['name'] = file
-        process_attributes['id'] = self.generator.generate_process_tree_node_id()
+        process_attributes['id'] = maec.utils.idgen.create_id(prefix="proceess_tree_node_id")
         process_attributes['image_info'] = { 'path' : { 'value' : path } }
         if arguments != None:
             process_attributes['image_info']['argument_list'] = arguments
@@ -354,7 +357,8 @@ class parser:
     def __process_file_activities(self, file_activity, current_process_obj):
         for deleted_file in file_activity.get_file_deleted():
             file_attributes = {}
-            associated_object_dict = {  'id' : self.generator.generate_object_id() }
+            associated_object_dict = {  'id' :
+                maec.utils.idgen.create_id(prefix="object")}
             
             filename = deleted_file.get_name()
             if filename.count(',') > 0:
@@ -386,7 +390,7 @@ class parser:
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['associated_objects'] = [associated_object_dict]
             
             if not is_pipe:
@@ -402,7 +406,8 @@ class parser:
             
         for created_file in file_activity.get_file_created():
             file_attributes = {}
-            associated_object_dict = {  'id' : self.generator.generate_object_id() }
+            associated_object_dict = {  'id' :
+                maec.utils.idgen.create_id(prefix="object")}
             
             filename = created_file.get_name()
             if filename.count(',') > 0:
@@ -431,7 +436,7 @@ class parser:
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['associated_objects'] = [associated_object_dict]
             
             if not is_pipe:
@@ -446,7 +451,7 @@ class parser:
 
         for read_file in file_activity.get_file_read():
             file_attributes = {}
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             filename = read_file.get_name()
             if filename.count(',') > 0:
                 split_filename = filename.split(',')[0].split('\\')
@@ -478,7 +483,7 @@ class parser:
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['associated_objects'] = [associated_object_dict]
             
             if not is_pipe:
@@ -519,13 +524,13 @@ class parser:
                 
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = file_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['associated_objects'] = [associated_object_dict]
             
             if not is_pipe:
@@ -685,7 +690,7 @@ class parser:
                 
         for renamed_file in file_activity.get_file_renamed():
             file_attributes_old = {}
-            associated_object_dict_old = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict_old = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             filename_old = renamed_file.get_old_name()
             split_filename_old = filename_old.split('\\')
             actual_filename_old = split_filename_old[len(split_filename_old)-1]
@@ -701,7 +706,7 @@ class parser:
                 
                 
             file_attributes_new = {}
-            associated_object_dict_new = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict_new = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             filename_new = renamed_file.get_new_name()
             split_filename_new = filename_new.split('\\')
             actual_filename_new = split_filename_new[len(split_filename_new)-1]
@@ -726,7 +731,7 @@ class parser:
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['associated_objects'] = [associated_object_dict_old, associated_object_dict_new]
             
             action_attributes['name'] = {'value' : 'rename file', 'xsi:type' : 'maecVocabs:FileActionNameVocab-1.0'}
@@ -752,13 +757,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'create registry key', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -781,13 +786,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'open registry key', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -810,13 +815,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'delete registry key', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -840,13 +845,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'delete registry key value', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -876,13 +881,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'modify registry key value', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -911,13 +916,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'read registry key value', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -940,13 +945,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'monitor registry key', 'xsi:type' : 'maecVocabs:RegistryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
@@ -975,13 +980,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = service_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'start service', 'xsi:type' : 'maecVocabs:ServiceActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
@@ -999,13 +1004,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = service_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'create service', 'xsi:type' : 'maecVocabs:ServiceActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
@@ -1022,13 +1027,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = service_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'delete service', 'xsi:type' : 'maecVocabs:ServiceActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
@@ -1045,13 +1050,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = service_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'modify service configuration', 'xsi:type' : 'maecVocabs:ServiceActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
@@ -1106,13 +1111,13 @@ class parser:
 
                 #Generate the MAEC objects and actions
                 #First, create the object
-                associated_object_dict = { 'id' : self.generator.generate_object_id() }
+                associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
                 associated_object_dict['properties'] = connection_attributes
                 associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
                 #Next, create the action (that operated on the object)
                 action_attributes = {}
-                action_attributes['id'] = self.generator.generate_malware_action_id()
+                action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
                 action_attributes['name'] = {'value' : 'connect to socket address', 'xsi:type' : 'maecVocabs:NetworkActionNameVocab-1.0'}
                 action_attributes['associated_objects'] = [associated_object_dict]
                 socket_action = MalwareAction.from_dict(action_attributes)
@@ -1138,13 +1143,13 @@ class parser:
 
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'create process', 'xsi:type' : 'maecVocabs:ProcessActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
@@ -1160,13 +1165,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'kill process', 'xsi:type' : 'maecVocabs:ProcessActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
@@ -1185,13 +1190,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'create remote thread in process', 'xsi:type' : 'maecVocabs:ProcessThreadActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
@@ -1213,13 +1218,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'read from process memory', 'xsi:type' : 'maecVocabs:ProcessMemoryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
@@ -1238,13 +1243,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
             associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'write to process memory', 'xsi:type' : 'maecVocabs:ProcessMemoryActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
@@ -1261,13 +1266,13 @@ class parser:
 
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = mutex_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'create mutex', 'xsi:type' : 'maecVocabs:SynchronizationActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
@@ -1285,13 +1290,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = driver_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'load driver', 'xsi:type': 'maecVocabs:DeviceDriverActionNameVocab-1.0' }
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id
@@ -1308,13 +1313,13 @@ class parser:
             
             #Generate the MAEC objects and actions
             #First, create the object
-            associated_object_dict = { 'id' : self.generator.generate_object_id() }
+            associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = driver_attributes
             associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
-            action_attributes['id'] = self.generator.generate_malware_action_id()
+            action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'load driver', 'xsi:type': 'maecVocabs:DeviceDriverActionNameVocab-1.0' }
             action_attributes['associated_objects'] = [associated_object_dict]
             action_attributes['tool_id'] = self.tool_id

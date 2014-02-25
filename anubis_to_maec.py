@@ -25,7 +25,7 @@ import os
 import traceback
 
 #Create a MAEC output file from an Anubis input file
-def create_maec(inputfile, outputfile, verbose_error_mode):
+def create_maec(inputfile, outpath, verbose_error_mode):
 
     if os.path.isfile(inputfile):    
 
