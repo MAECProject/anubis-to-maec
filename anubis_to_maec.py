@@ -43,19 +43,21 @@ def create_maec(inputfile, outputfile, verbose_error_mode):
             parser.parse_document()
 
             #Create the MAEC package
-            package = Package(parser.generator.generate_package_id())
+            package = Package()
             
             #Add the analysis
             for subject in parser.maec_subjects:
                 package.add_malware_subject(subject)
                 
             ##Finally, Export the results
-            package.to_xml_file(outputfile)
+            package.to_xml_file(outpath,
+                {"https://github.com/MAECProject/anubis-to-maec":"AnubisToMAEC"})
+
+            print "Wrote to " + outpath
             
         except Exception, err:
-           #print('\nError: %s\n' % str(err))
-           
-           if verbose_error_mode or True:
+            print('\nError: %s\n' % str(err))
+            if verbose_error_mode:
                 traceback.print_exc()
     else:
         print('\nError: Input file not found or inaccessible.')
