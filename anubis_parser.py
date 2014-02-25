@@ -87,6 +87,10 @@ class parser:
         
         #Setup the action/object dictionaries
         self.__setup_dictionaries()
+
+        # Instantiate the ID generator class (for automatic ID generation) with our example namespace
+        NS = Namespace("https://github.com/MAECProject/anubis-to-maec", "AnubisToMAEC")
+        maec.utils.set_id_namespace(NS)
         
         #Get the analysis config
         config = self.analysis_object.get_configuration()
