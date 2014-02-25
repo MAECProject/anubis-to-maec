@@ -85,19 +85,6 @@ class parser:
         #Get the analysis subjects
         analysis_subjects = self.analysis_object.get_analysis_subject()
         
-        id_namespace = None
-        
-        for analysis_subject in analysis_subjects:
-            id_namespace = analysis_subject.get_general().get_md5()
-            if id_namespace is not None:
-                break
-        
-        if id_namespace is None:
-            for analysis_subject in analysis_subjects:
-                id_namespace = analysis_subject.get_general().get_virtual_fn()
-                if id_namespace is not None:
-                    break
-        
         #Setup the action/object dictionaries
         self.__setup_dictionaries()
         
