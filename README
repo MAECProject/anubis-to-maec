@@ -2,7 +2,7 @@
 
       Anubis XML -> MAEC XML Converter Script
 
- Copyright (c) 2012, 2013 - The MITRE Corporation
+ Copyright (c) 2014 - The MITRE Corporation
 
 ****************************************************
 
@@ -12,34 +12,31 @@ CONDITIONS OF USE.  IF YOU DO NOT AGREE TO THESE TERMS, DO NOT USE THE SCRIPT.
 For more information, please refer to the terms.txt file.
 
 #################################################################
-#Generates MAEC Output from an Anubis XML File                  #
-#Compatible with MAEC Schema v4.0.1 & CybOX 2.0.1               #
-#v0.94 - BETA                                                   #
-#Updated 10/16/2013                                              #
-#Ivan Kirillov//ikirillov@mitre.org                             #
-#Andrew Sillers//asillers@mitre.org                             #
+#Generates MAEC Package Output from an Anubis XML File          #
+#Compatible with MAEC Schema v4.1 & CybOX 2.1                   #
+#                                                               #
+#v0.95 - BETA                                                   #
+#Updated 02/17/2014                                             #
 #                                                               #
 #################################################################
 # MAEC - http://maec.mitre.org                                  #
 # Anubis - http://anubis.iseclab.org                            #
 #################################################################
-
-
-This software depends on the python-cybox (v2.0.1) and python-maec (v4.0.1)
-libraries:
-
-python-cybox: https://pypi.python.org/pypi/cybox/2.0.1.1
-python-maec:  https://pypi.python.org/pypi/maec
-
-
 --------------------------------------------------------------------------------
 --Included Files----------------------------------------------------------------
 
 README: this file.
 anubis_to_maec.py: the Anubis XML to MAEC XML Python converter script.
-anubis_v2.py: the Anubis Python bindings which the script imports.
-anubis_parser.py: the Anubis parser class.
+anubis_v2.py: the Anubis Python bindings, which the script imports.
+anubis_parser.py: the Anubis to MAEC parser class, which does most of the work.
 terms.txt: the terms of use for this script.
+--------------------------------------------------------------------------------
+--Dependencies------------------------------------------------------------------
+
+There are three dependencies for this script:
+1) The Python lxml library  >= 3.2.x, http://lxml.de/
+2) The python-maec library  >= v4.1.0.0: https://pypi.python.org/pypi/maec
+3) The python-cybox library >= v2.1.0.0: https://pypi.python.org/pypi/cybox
 --------------------------------------------------------------------------------
 --Usage Notes-------------------------------------------------------------------
 
@@ -49,22 +46,13 @@ There are three main command line parameters for this script:
 
 -o: the path to the output MAEC XML file
 
-OR
-
--d: the path to a directory of Anubis XML files. The script will attempt to convert
-all files in the directory to their MAEC representations, and each output file will be 
-written to the current directory using the same name as the input file with '_maec' appended
-to it.
-
-There are two additional, optional parameters that may be specified before the main paramters:
-
--s: print statistics regarding the number of actions extracted
+There is an additional, optional parameters that may be specified before the main paramters:
 
 -v: print verbose error output (tracebacks)
 
 To use the script, run the following command:
 
-python anubis_to_maec.py -i <anubis_file> -o <maec_file>
+python anubis_to_maec.py -i <anubis_xml_file> -o <maec_xml_file>
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

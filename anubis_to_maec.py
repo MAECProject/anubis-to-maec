@@ -2,7 +2,7 @@
 #                                                   #
 #      Anubis -> MAEC XML Converter Script          #
 #                                                   #
-# Copyright (c) 2013 - The MITRE Corporation        #
+# Copyright (c) 2014 - The MITRE Corporation        #
 #                                                   #
 #***************************************************#
 
@@ -12,12 +12,10 @@
 
 #For more information, please refer to the terms.txt file.
 
-#Anubis -> MAEC Converter Script
-#Copyright 2013, MITRE Corp
-#Andrew Sillers//asillers@mitre.org
-#Ivan Kirillov//ikirillov@mitre.org
-#v0.94 - beta
-#Updated 10/16/13 for compatibility with MAEC schema v4.0.1
+#Anubis Converter Script
+#Copyright 2014, MITRE Corp
+#v0.95 - BETA
+#Updated 02/24/2014 for MAEC v4.1 and CybOX v2.1
 
 import anubis_parser as anparser
 from maec.package.package import Package
@@ -26,15 +24,14 @@ import os
 import traceback
 
 #Create a MAEC output file from an Anubis input file
-def create_maec(inputfile, outputfile, verbose_error_mode, stat_mode):
-    stat_actions = 0
+def create_maec(inputfile, outpath, verbose_error_mode):
+
     if os.path.isfile(inputfile):    
+
         #Create the main parser object
-        
         parser = anparser.parser()
         
         try:
-            
             open_file = parser.open_file(inputfile)
             
             if not open_file:
@@ -45,28 +42,21 @@ def create_maec(inputfile, outputfile, verbose_error_mode, stat_mode):
             parser.parse_document()
 
             #Create the MAEC package
-            package = Package(parser.generator.generate_package_id())
+            package = Package()
             
             #Add the analysis
             for subject in parser.maec_subjects:
                 package.add_malware_subject(subject)
                 
-            ##Add all applicable actions to the bundle
-            for key, value in parser.actions.items():
-                for action in value:
-                    stat_actions += 1
-                
             ##Finally, Export the results
-            package.to_xml_file(outputfile)
+            package.to_xml_file(outpath,
+                {"https://github.com/MAECProject/anubis-to-maec":"AnubisToMAEC"})
+
+            print "Wrote to " + outpath
             
-            if stat_mode:
-                print '\n---- Statistics ----'
-                print str(stat_actions) + ' actions converted'
-                #print str(converter.stat_behaviors) + ' behaviors extracted'
         except Exception, err:
-           #print('\nError: %s\n' % str(err))
-           
-           if verbose_error_mode or True:
+            print('\nError: %s\n' % str(err))
+            if verbose_error_mode:
                 traceback.print_exc()
     else:
         print('\nError: Input file not found or inaccessible.')
@@ -79,18 +69,18 @@ def usage():
     
 USAGE_TEXT = """
 Anubis XML Output --> MAEC XML Converter Utility
-v0.94 BETA
-Generates valid MAEC v4.0.1 content
+v0.95 BETA // Supports MAEC v4.1 and CybOX v2.1
 
-Usage: python anubis_to_maec.py <special arguments> -i <input anubis xml output> -o <output maec xml file> OR -d <directory name>
+Usage: python anubis_to_maec.py <special arguments> -i <input anubis xml output> -o <output maec xml file>
+       OR -d <directory name>
 
 Special arguments are as follows (all are optional):
--s : print statistics regarding number of actions converted.
 -v : verbose error mode (prints tracebacks of any errors during execution).
+
 """    
+
 def main():
     verbose_error_mode = 0
-    stat_mode = 0
     infilename = ''
     outfilename = ''
     directoryname = ''
@@ -111,8 +101,6 @@ def main():
             outfilename = args[i+1]
         elif args[i] == '-d':
             directoryname = args[i+1]
-        elif args[i] == '-s':
-            stat_mode = 1
     
     if directoryname != '':
         for filename in os.listdir(directoryname):
@@ -121,10 +109,11 @@ def main():
             else:
                 print filename
                 outfilename = filename.rstrip('.xml') + '_anubis_maec.xml'
-                create_maec(os.path.join(directoryname, filename), outfilename, verbose_error_mode, stat_mode)
+                create_maec(os.path.join(directoryname, filename), outfilename,
+                    verbose_error_mode)
     #Basic input file checking
     elif infilename != '' and outfilename != '':
-        create_maec(infilename, outfilename, verbose_error_mode, stat_mode)
+        create_maec(infilename, outfilename, verbose_error_mode)
     print 'Done'
 
 if __name__ == "__main__":
