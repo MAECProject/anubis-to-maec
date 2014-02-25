@@ -172,7 +172,7 @@ class parser:
         self.bundle_obj = Bundle(False)
         for key, value in self.actions.items():
             if len(value) > 0:
-                self.bundle_obj.add_named_action_collection(key, self.generator.generate_action_collection_id())
+                self.bundle_obj.add_named_action_collection(key)
             for action in value:
                 self.bundle_obj.add_action(action, key)
                 
