@@ -315,7 +315,7 @@ class parser:
         
         process_attributes['xsi:type'] = 'WindowsProcessObjectType'
         process_attributes['name'] = file
-        process_attributes['id'] = maec.utils.idgen.create_id(prefix="proceess_tree_node_id")
+        process_attributes['id'] = maec.utils.idgen.create_id(prefix="process_tree_node")
         process_attributes['image_info'] = { 'path' : { 'value' : path } }
         if arguments != None:
             process_attributes['image_info']['argument_list'] = arguments
