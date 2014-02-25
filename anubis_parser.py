@@ -12,13 +12,13 @@ from maec.bundle.av_classification import AVClassification, AVClassifications
 from maec.package.analysis import Analysis, DynamicAnalysisMetadata
 from maec.package.malware_subject import MalwareSubject
 from maec.bundle.behavior import Behavior
-from maec.id_generator import Generator
-from maec.bundle.process_tree import ProcessTree
-from maec.utils import MAECNamespaceParser
+import maec.utils
+from cybox.utils import Namespace
 from cybox.core.object import Object
 from cybox.core.associated_object import AssociatedObject
 from cybox.common.tools import ToolInformation
 import anubis
+import traceback
 
 # test if a dictionary is empty,
 # i.e., all properties are None or empty string
@@ -53,8 +53,6 @@ class parser:
         self.version = ''
         #action ids
         self. action_ids = []
-        #generator
-        self.generator = None
         self.actions = {}
         self.objects = {}
         self.maec_behaviors = {}
@@ -98,9 +96,6 @@ class parser:
                 id_namespace = analysis_subject.get_general().get_virtual_fn()
                 if id_namespace is not None:
                     break
-        
-        #Setup the generator
-        self.generator = Generator('anubis_to_maec_' + id_namespace)
         
         #Setup the action/object dictionaries
         self.__setup_dictionaries()
@@ -174,7 +169,7 @@ class parser:
                 self.__process_activities(analysis_subject.get_activities(), current_process_obj)
             
         #after all processes have been handled, add actions to the bundle
-        self.bundle_obj = Bundle(self.generator.generate_bundle_id(), False)
+        self.bundle_obj = Bundle(False)
         for key, value in self.actions.items():
             if len(value) > 0:
                 self.bundle_obj.add_named_action_collection(key, self.generator.generate_action_collection_id())
@@ -216,7 +211,7 @@ class parser:
         av_aliases = self.__get_av_aliases(analysis_subject) 
         
         #create the analysis subject object
-        malware_subject_object = MalwareSubject(self.generator.generate_malware_subject_id())
+        malware_subject_object = MalwareSubject()
         
         #Create the file object and add the attributes
         object_dict = {}
@@ -263,7 +258,7 @@ class parser:
                 file_dict['pe_attributes'] = pe_attributes
         
         # create the analysis and add it to the subject
-        analysis = Analysis(self.generator.generate_analysis_id())
+        analysis = Analysis()
         analysis.type = 'triage'
         analysis.method = 'dynamic'
         analysis.add_tool(ToolInformation.from_dict({'id' : self.generator.generate_tool_id(),
