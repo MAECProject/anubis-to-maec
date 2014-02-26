@@ -377,7 +377,7 @@ class parser:
             
             # defined associated object
             associated_object_dict['properties'] = file_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
@@ -517,7 +517,7 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = file_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
@@ -611,7 +611,7 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = regkey_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Generate the MAEC action
             action_attributes = {}
@@ -805,7 +805,7 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = service_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
@@ -852,7 +852,7 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = service_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
@@ -936,7 +936,7 @@ class parser:
                 #First, create the object
                 associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
                 associated_object_dict['properties'] = connection_attributes
-                associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+                associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
                 #Next, create the action (that operated on the object)
                 action_attributes = {}
@@ -990,7 +990,7 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
@@ -1015,7 +1015,7 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = process_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
@@ -1098,7 +1098,6 @@ class parser:
             action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'create mutex', 'xsi:type' : 'maecVocabs:SynchronizationActionNameVocab-1.0'}
             action_attributes['associated_objects'] = [associated_object_dict]
-            action_attributes['tool_id'] = self.tool_id
             mutex_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('ipc').append(mutex_action)
             current_process_obj['initiated_actions'].append({ 'action_id': mutex_action.id_ })
@@ -1115,14 +1114,13 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = driver_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
             action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'load driver', 'xsi:type': 'maecVocabs:DeviceDriverActionNameVocab-1.0' }
             action_attributes['associated_objects'] = [associated_object_dict]
-            action_attributes['tool_id'] = self.tool_id
             driver_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('driver').append(driver_action)
             current_process_obj['initiated_actions'].append({ 'action_id': driver_action.id_ })
@@ -1138,14 +1136,13 @@ class parser:
             #First, create the object
             associated_object_dict = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             associated_object_dict['properties'] = driver_attributes
-            associated_object_dict['association_type'] = {'value' : 'output', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
+            associated_object_dict['association_type'] = {'value' : 'input', 'xsi:type' : 'maecVocabs:ActionObjectAssociationTypeVocab-1.0'}
 
             #Next, create the action (that operated on the object)
             action_attributes = {}
             action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
             action_attributes['name'] = {'value' : 'load driver', 'xsi:type': 'maecVocabs:DeviceDriverActionNameVocab-1.0' }
             action_attributes['associated_objects'] = [associated_object_dict]
-            action_attributes['tool_id'] = self.tool_id
             driver_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('driver').append(driver_action)
             current_process_obj['initiated_actions'].append({ 'action_id': driver_action.id_ })
