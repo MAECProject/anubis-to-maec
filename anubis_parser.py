@@ -683,36 +683,15 @@ class parser:
             file_attributes_old = {}
             associated_object_dict_old = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             filename_old = renamed_file.get_old_name()
-            split_filename_old = filename_old.split('\\')
-            actual_filename_old = split_filename_old[len(split_filename_old)-1]
-            filepath_old = filename_old.rstrip(actual_filename_old)
             file_attributes_old['xsi:type'] = "FileObjectType"
-            file_attributes_old['file_name'] = { 'value' : actual_filename_old }
-            if len(filepath_old) > 1:
-                file_attributes['xsi:type'] = "FileObjectType"
-                fully_qualified = True
-                if "%" in filename_old:
-                    fully_qualified = False
-                file_attributes['file_path'] = { 'value' : filename_old, 'fully_qualified' : fully_qualified }
-                
+            file_attributes_old['file_path'] = { 'value' : filename_old }
                 
             file_attributes_new = {}
             associated_object_dict_new = { 'id' : maec.utils.idgen.create_id(prefix="object") }
             filename_new = renamed_file.get_new_name()
-            split_filename_new = filename_new.split('\\')
-            actual_filename_new = split_filename_new[len(split_filename_new)-1]
-            filepath_new = filename_new.rstrip(actual_filename_new)
             file_attributes_new['xsi:type'] = "FileObjectType"
-            file_attributes_new['file_name'] = { 'value' : actual_filename_new }
-            if len(filepath_new) > 1:
-                file_attributes['xsi:type'] = "FileObjectType"
-                fully_qualified = True
-                if "%" in filename_new:
-                    fully_qualified = False
-                file_attributes['file_path'] = { 'value' : filename_new, 'fully_qualified' : fully_qualified }
-                
-            if empty_test(file_attributes): continue
-                
+            file_attributes_new['file_path'] = { 'value' : filename_new }
+
             #Generate the MAEC objects and actions
             #First, create the objects
             associated_object_dict_old['properties'] = file_attributes_old
