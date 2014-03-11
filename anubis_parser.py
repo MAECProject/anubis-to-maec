@@ -53,7 +53,7 @@ class parser:
         self.parent_process_id = 0
         self.version = ''
         #action ids
-        self. action_ids = []
+        self.action_ids = []
         self.actions = {}
         self.objects = {}
         self.maec_behaviors = {}
