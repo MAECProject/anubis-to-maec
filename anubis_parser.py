@@ -39,7 +39,9 @@ def empty_test(dic):
 
     return True
 
+
 class parser:
+
     def __init__(self):
         #array for storing actions
         self.actions = []
