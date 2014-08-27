@@ -15,7 +15,7 @@ For more information, please refer to the terms.txt file.
 #Generates MAEC Package Output from an Anubis XML File          #
 #Compatible with MAEC Schema v4.1 & CybOX 2.1                   #
 #                                                               #
-#v0.95 - BETA                                                   #
+#v0.96 - BETA                                                   #
 #Updated 02/17/2014                                             #
 #                                                               #
 #################################################################
@@ -37,8 +37,8 @@ be compatible with Python 3.x.
 
 There are three dependencies for this script:
 1) The Python lxml library  >= 3.2.x, http://lxml.de/
-2) The python-maec library  >= v4.1.0.0: https://pypi.python.org/pypi/maec
-3) The python-cybox library >= v2.1.0.0: https://pypi.python.org/pypi/cybox
+2) The python-maec library  >= v4.1.0.7: https://pypi.python.org/pypi/maec
+3) The python-cybox library >= v2.1.0.6: https://pypi.python.org/pypi/cybox
 --------------------------------------------------------------------------------
 --Usage Notes-------------------------------------------------------------------
 

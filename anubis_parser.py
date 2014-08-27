@@ -171,7 +171,7 @@ class parser:
         self.bundle_obj.set_process_tree(ProcessTree.from_dict(process_tree))
 
         malware_subject.add_findings_bundle(self.bundle_obj)
-        malware_subject.analyses[0].set_findings_bundle(self.bundle_obj.id)
+        malware_subject.analyses[0].set_findings_bundle(self.bundle_obj.id_)
         
         self.maec_subjects.append(malware_subject)
         
