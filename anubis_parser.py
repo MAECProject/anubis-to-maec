@@ -390,7 +390,7 @@ class parser:
             
             self.actions.get('File System Actions').append(fs_action)
             
-            current_process_obj['initiated_actions'].append({'action_id': fs_action.id_})
+            current_process_obj['initiated_actions'].append(fs_action.id_)
             
         for created_file in file_activity.get_file_created():
             file_attributes = {}
@@ -434,7 +434,7 @@ class parser:
             
             fs_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('File System Actions').append(fs_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id_ })
+            current_process_obj['initiated_actions'].append(fs_action.id_)
 
 
         for read_file in file_activity.get_file_read():
@@ -481,7 +481,7 @@ class parser:
 
             fs_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('File System Actions').append(fs_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id_ })
+            current_process_obj['initiated_actions'].append(fs_action.id_)
             
             
         for modified_file in file_activity.get_file_modified():
@@ -528,7 +528,7 @@ class parser:
 
             fs_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('File System Actions').append(fs_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id_ })
+            current_process_obj['initiated_actions'].append(fs_action.id_)
                 
         for renamed_file in file_activity.get_file_renamed():
             file_attributes_old = {}
@@ -559,7 +559,7 @@ class parser:
 
             fs_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('File System Actions').append(fs_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': fs_action.id_ })
+            current_process_obj['initiated_actions'].append(fs_action.id_)
     
     def __process_registry_activities(self, registry_activity, current_process_obj):
         for created_regkey in registry_activity.get_reg_key_created():
@@ -588,7 +588,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
             
         for opened_regkey in registry_activity.get_reg_key_created_or_opened():
             regkey_attributes = {}
@@ -617,7 +617,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
         
         for deleted_regkey in registry_activity.get_reg_key_deleted():
             regkey_attributes = {}
@@ -646,7 +646,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
         
         for deleted_regkeyvalue in registry_activity.get_reg_value_deleted():
             regkey_attributes = {}
@@ -676,7 +676,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
             
         for modified_regvalue in registry_activity.get_reg_value_modified():
             regkey_attributes = {}
@@ -712,7 +712,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
         
         for read_regvalue in registry_activity.get_reg_value_read():
             regkey_attributes = {}
@@ -747,7 +747,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
             
         for monitored_regkey in registry_activity.get_reg_key_monitored():
             regkey_attributes = {}
@@ -776,7 +776,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             reg_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Registry Actions').append(reg_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': reg_action.id_ })
+            current_process_obj['initiated_actions'].append(reg_action.id_)
             
     def __map_reg_hive_string(self, input):
         if input == 'HKU':
@@ -812,7 +812,7 @@ class parser:
             action_attributes['tool_id'] = self.tool_id
             service_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Service Actions').append(service_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': service_action.id_ })
+            current_process_obj['initiated_actions'].append(service_action.id_)
         
         for created_service in service_activity.get_service_created():
             service_attributes = {}
@@ -836,7 +836,7 @@ class parser:
             action_attributes['tool_id'] = self.tool_id
             service_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Service Actions').append(service_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': service_action.id_ })
+            current_process_obj['initiated_actions'].append(service_action.id_)
             
         for deleted_service in service_activity.get_service_deleted():
             service_attributes = {}
@@ -859,7 +859,7 @@ class parser:
             action_attributes['tool_id'] = self.tool_id
             service_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Service Actions').append(service_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': service_action.id_ })
+            current_process_obj['initiated_actions'].append(service_action.id_)
         
         for changed_service in service_activity.get_service_changed():
             service_attributes = {}
@@ -882,7 +882,7 @@ class parser:
             action_attributes['tool_id'] = self.tool_id
             service_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Service Actions').append(service_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': service_action.id_ })
+            current_process_obj['initiated_actions'].append(service_action.id_)
 
         # python-cybox does not yet support control codes
         '''for control_code in service_activity.get_service_control_code():
@@ -942,7 +942,7 @@ class parser:
                 action_attributes['associated_objects'] = [associated_object_dict]
                 socket_action = MalwareAction.from_dict(action_attributes)
                 self.actions.get('Network Actions').append(socket_action)
-                current_process_obj['initiated_actions'].append({ 'action_id': socket_action.id_ })
+                current_process_obj['initiated_actions'].append(socket_action.id_)
 
                 
     def __process_process_activities(self, process_activity, current_process_obj):
@@ -974,7 +974,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Process Actions').append(process_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
+            current_process_obj['initiated_actions'].append(process_action.id_)
             
         for killed_process in process_activity.get_process_killed():
             process_attributes = {}
@@ -996,7 +996,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Process Actions').append(process_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
+            current_process_obj['initiated_actions'].append(process_action.id_)
         
         for created_remote_thread in process_activity.get_remote_thread_created():
             process_path = created_remote_thread.get_process()
@@ -1021,7 +1021,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Process Actions').append(process_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
+            current_process_obj['initiated_actions'].append(process_action.id_)
             
         for mem_read in process_activity.get_foreign_mem_area_read():
             process_path = mem_read.get_process()
@@ -1049,7 +1049,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Process Actions').append(process_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
+            current_process_obj['initiated_actions'].append(process_action.id_)
             
         for mem_write in process_activity.get_foreign_mem_area_write():
             process_path = mem_write.get_process()
@@ -1074,7 +1074,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             process_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Process Actions').append(process_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': process_action.id_ })
+            current_process_obj['initiated_actions'].append(process_action.id_)
             
     def __process_misc_activities(self, misc_activity, current_process_obj):
         for created_mutex in misc_activity.get_mutex_created():
@@ -1097,7 +1097,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             mutex_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('IPC Actions').append(mutex_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': mutex_action.id_ })
+            current_process_obj['initiated_actions'].append(mutex_action.id_)
             
     
         for loaded_driver in misc_activity.get_driver_loaded():
@@ -1120,7 +1120,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             driver_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Driver Actions').append(driver_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': driver_action.id_ })
+            current_process_obj['initiated_actions'].append(driver_action.id_)
 
         for unloaded_driver in misc_activity.get_driver_unloaded():
             driver_attributes = {}
@@ -1142,7 +1142,7 @@ class parser:
             action_attributes['associated_objects'] = [associated_object_dict]
             driver_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Driver Actions').append(driver_action)
-            current_process_obj['initiated_actions'].append({ 'action_id': driver_action.id_ })
+            current_process_obj['initiated_actions'].append(driver_action.id_)
     
     def __get_av_aliases(self, object):
         av_classification_objects = [] 
