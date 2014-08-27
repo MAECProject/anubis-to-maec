@@ -170,6 +170,8 @@ class parser:
 
         self.bundle_obj.set_process_tree(ProcessTree.from_dict(process_tree))
 
+        print process_tree
+
         malware_subject.add_findings_bundle(self.bundle_obj)
         malware_subject.analyses[0].set_findings_bundle(self.bundle_obj.id_)
         
@@ -309,13 +311,13 @@ class parser:
             process_attributes['image_info']['argument_list'] = arguments
         
         process_attributes['initiated_actions'] = []
-        process_attributes['spawned_processes'] = []
+        process_attributes['spawned_process'] = []
         
         if parent_obj_id == 1:
             process_tree['root_process'] = process_attributes
         else:
             parent_process = id_map.get(parent_obj_id)
-            parent_process['spawned_processes'].append(process_attributes)
+            parent_process['spawned_process'].append(process_attributes)
         
         #add the object to the id map
         id_map[obj_id] = process_attributes
