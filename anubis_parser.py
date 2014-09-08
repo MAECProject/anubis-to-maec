@@ -248,7 +248,7 @@ class parser:
         
         # create the analysis and add it to the subject
         analysis = Analysis()
-        analysis.type = 'triage'
+        analysis.type_ = 'triage'
         analysis.method = 'dynamic'
         analysis.add_tool(ToolInformation.from_dict({'id' :
           maec.utils.idgen.create_id(prefix="tool"),
