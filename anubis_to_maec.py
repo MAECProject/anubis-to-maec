@@ -50,6 +50,14 @@ def create_maec(inputfile, outpath, verbose_error_mode, options):
             for subject in parser.maec_subjects:
                 package.add_malware_subject(subject)
                 
+                if options:
+                    if options.normalize_bundles:
+                        subject.normalize_bundles()
+                    if options.deduplicate_bundles:
+                        subject.deduplicate_bundles()
+                    if options.dereference_bundles:
+                        subject.dereference_bundles()
+                
             ##Finally, Export the results
             package.to_xml_file(outpath,
                 {"https://github.com/MAECProject/anubis-to-maec":"AnubisToMAEC"})
