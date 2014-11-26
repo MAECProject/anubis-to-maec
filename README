@@ -15,8 +15,8 @@ For more information, please refer to the LICENSE.txt file.
 #Generates MAEC Package Output from an Anubis XML File          #
 #Compatible with MAEC Schema v4.1 & CybOX 2.1                   #
 #                                                               #
-#v0.96 - BETA                                                   #
-#Updated 02/17/2014                                             #
+#v0.97 - BETA                                                   #
+#Updated 11/26/2014                                             #
 #                                                               #
 #################################################################
 # MAEC - http://maec.mitre.org                                  #
@@ -37,24 +37,25 @@ be compatible with Python 3.x.
 
 There are three dependencies for this script:
 1) The Python lxml library  >= 3.2.x, http://lxml.de/
-2) The python-maec library  >= v4.1.0.7: https://pypi.python.org/pypi/maec
-3) The python-cybox library >= v2.1.0.6: https://pypi.python.org/pypi/cybox
+2) The python-maec library  >= v4.1.0.8: https://pypi.python.org/pypi/maec
+3) The python-cybox library >= v2.1.0.8: https://pypi.python.org/pypi/cybox
 --------------------------------------------------------------------------------
 --Usage Notes-------------------------------------------------------------------
 
-There are three main command line parameters for this script:
+The input Anubis file or directory should be specified as the first argument, and the output file or directory should be specified as the second argument.
 
--i: the path to the input Anubis XML file
+The script also supports the following optional command line parameters:
 
--o: the path to the output MAEC XML file
+--deduplicate, -dd: deduplicate objects in MAEC output
 
-There is an additional, optional parameters that may be specified before the main paramters:
+--dereference, -dr: dereference the MAEC output
 
--v: print verbose error output (tracebacks)
+--normalize, -n: normalize the MAEC output
+
+--verbose, -v: print verbose error output (tracebacks)
 
 To use the script, run the following command:
 
-python anubis_to_maec.py -i <anubis_xml_file> -o <maec_xml_file>
-
+python anubis_to_maec.py <flags> <input Anubis file/dir> <output MAEC file/dir>
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
