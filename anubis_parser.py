@@ -361,7 +361,6 @@ class parser:
             # define file attributes
             if is_pipe:
                 file_attributes['xsi:type'] = "PipeObjectType"
-                file_attributes['named'] = True
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
@@ -408,7 +407,6 @@ class parser:
             
             if is_pipe:
                 file_attributes['xsi:type'] = "PipeObjectType"
-                file_attributes['named'] = True
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
@@ -453,7 +451,6 @@ class parser:
             
             if is_pipe:
                 file_attributes['xsi:type'] = "PipeObjectType"
-                file_attributes['named'] = True
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
@@ -499,7 +496,6 @@ class parser:
             
             if is_pipe:
                 file_attributes['xsi:type'] = "PipeObjectType"
-                file_attributes['named'] = True
                 file_attributes['name'] = split_filename[1]
             else:
                 file_attributes['xsi:type'] = "FileObjectType"
