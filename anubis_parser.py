@@ -596,7 +596,6 @@ class parser:
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['key'] = actual_key
-            regkey_attributes['type'] = 'Key/Key Group'
             
             if empty_test(regkey_attributes): continue
             
@@ -625,7 +624,6 @@ class parser:
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['key'] = actual_key
-            regkey_attributes['type'] = 'Key/Key Group'
             
             if empty_test(regkey_attributes): continue
             
@@ -655,7 +653,6 @@ class parser:
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['key'] = actual_key
             regkey_attributes['value'] = [{ 'name' : deleted_regkeyvalue.get_value_name() }]
-            regkey_attributes['type'] = 'Key/Key Group'
             
             if empty_test(regkey_attributes): continue
             
@@ -691,7 +688,6 @@ class parser:
             if modified_regvalue.get_value_name() is not "":
                 regkey_attributes['values'][0]['name'] = modified_regvalue.get_value_name()
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
-            regkey_attributes['type'] = 'Key/Key Group'
             
             if empty_test(regkey_attributes): continue
             
@@ -726,7 +722,6 @@ class parser:
             if read_regvalue.get_value_name() is not "":
                 regkey_attributes['values'][0]['name'] = read_regvalue.get_value_name()
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
-            regkey_attributes['type'] = 'Key/Key Group'
             
             if empty_test(regkey_attributes): continue
             
@@ -755,7 +750,6 @@ class parser:
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['key'] = actual_key
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
-            regkey_attributes['type'] = 'Key/Key Group'
             
             if empty_test(regkey_attributes): continue
             
