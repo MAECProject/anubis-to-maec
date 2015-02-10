@@ -1128,7 +1128,7 @@ class parser:
             #Next, create the action (that operated on the object)
             action_attributes = {}
             action_attributes['id'] = maec.utils.idgen.create_id(prefix="action")
-            action_attributes['name'] = {'value' : 'load driver', 'xsi:type': 'maecVocabs:DeviceDriverActionNameVocab-1.0' }
+            action_attributes['name'] = {'value' : 'unload driver', 'xsi:type': 'maecVocabs:DeviceDriverActionNameVocab-1.0' }
             action_attributes['associated_objects'] = [associated_object_dict]
             driver_action = MalwareAction.from_dict(action_attributes)
             self.actions.get('Driver Actions').append(driver_action)
