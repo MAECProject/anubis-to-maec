@@ -652,7 +652,7 @@ class parser:
             actual_key = actual_key.rstrip('\\')
             regkey_attributes['xsi:type'] = "WindowsRegistryKeyObjectType"
             regkey_attributes['key'] = actual_key
-            regkey_attributes['value'] = [{ 'name' : deleted_regkeyvalue.get_value_name() }]
+            regkey_attributes['values'] = [{ 'name' : deleted_regkeyvalue.get_value_name() }]
             
             if empty_test(regkey_attributes): continue
             
