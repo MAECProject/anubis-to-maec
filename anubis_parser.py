@@ -784,7 +784,7 @@ class parser:
         for started_service in service_activity.get_service_started():
             service_attributes = {}
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
-            service_attributes['name'] = started_service.get_name()
+            service_attributes['service_name'] = started_service.get_name()
             
             if empty_test(service_attributes): continue
             
@@ -807,7 +807,7 @@ class parser:
         for created_service in service_activity.get_service_created():
             service_attributes = {}
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
-            service_attributes['name'] = created_service.get_name()
+            service_attributes['service_name'] = created_service.get_name()
             service_attributes['image_info'] = {'path' : { 'value' : created_service.get_path() } }
             
             if empty_test(service_attributes): continue
@@ -831,7 +831,7 @@ class parser:
         for deleted_service in service_activity.get_service_deleted():
             service_attributes = {}
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
-            service_attributes['name'] = deleted_service.get_name()
+            service_attributes['service_name'] = deleted_service.get_name()
             
             if empty_test(service_attributes): continue
             
@@ -854,7 +854,7 @@ class parser:
         for changed_service in service_activity.get_service_changed():
             service_attributes = {}
             service_attributes['xsi:type'] = 'WindowsServiceObjectType'
-            service_attributes['name'] = changed_service.get_name()
+            service_attributes['service_name'] = changed_service.get_name()
             
             if empty_test(service_attributes): continue
             
