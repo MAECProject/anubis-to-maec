@@ -2,7 +2,7 @@
 
       Anubis XML -> MAEC XML Converter Script
 
- Copyright (c) 2014 - The MITRE Corporation
+ Copyright (c) 2015 - The MITRE Corporation
 
 ****************************************************
 
@@ -15,8 +15,8 @@ For more information, please refer to the LICENSE.txt file.
 #Generates MAEC Package Output from an Anubis XML File          #
 #Compatible with MAEC Schema v4.1 & CybOX 2.1                   #
 #                                                               #
-#v0.97 - BETA                                                   #
-#Updated 11/26/2014                                             #
+#v0.98 - BETA                                                   #
+#Updated 2/10/2015                                             #
 #                                                               #
 #################################################################
 # MAEC - http://maec.mitre.org                                  #
